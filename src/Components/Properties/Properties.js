@@ -10,13 +10,10 @@ const Properties = () => {
   const isChanged = useSelector((state) => state.property.isChanged);
   const [Prop, setProp] = useState({});
   useEffect(() => {
-    console.log(Prop === null);
     axios
       .get(`${url}/property.json`)
       .then((res) => {
-        console.log(res.data);
         setProp(res.data);
-        console.log(Prop === null);
       })
       .catch((err) => {
         console.log(err);
