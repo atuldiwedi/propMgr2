@@ -10,13 +10,13 @@ const Properties = () => {
   const isChanged = useSelector((state) => state.property.isChanged);
   const [Prop, setProp] = useState({});
   useEffect(() => {
+    console.log(Prop === null);
     axios
       .get(`${url}/property.json`)
       .then((res) => {
         console.log(res.data);
         setProp(res.data);
-
-        Object.keys(Prop).map((property) => console.log(property));
+        console.log(Prop === null);
       })
       .catch((err) => {
         console.log(err);
@@ -27,13 +27,17 @@ const Properties = () => {
     <>
       <PropertyForm />
       <PropertiesContainer>
-        {Object.keys(Prop).map((property) => (
-          <Property
-            key={Prop[property].id}
-            propertyId={property}
-            property={Prop[property]}
-          />
-        ))}
+        {Prop && Object.keys(Prop).length > 0 ? (
+          Object.keys(Prop).map((property) => (
+            <Property
+              key={Prop[property].id}
+              propertyId={property}
+              property={Prop[property]}
+            />
+          ))
+        ) : (
+          <h3>No property listed</h3>
+        )}
       </PropertiesContainer>
     </>
   );
